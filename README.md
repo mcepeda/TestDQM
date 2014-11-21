@@ -29,9 +29,12 @@ that will evolve to a executable.
 ```bash
 cd test
 #b1) for running capture and then DQM 
-bash test/runCaptureDQMPlot.sh
+# (for this step you need to have the forwarding from the ctp7 active, and coordinate with the crew in P5
+# to make sure you can play)
+bash runCaptureDQMPlot.sh
 #b2) for running only the DQM - plotting sequence
-bash test/runDQMPlot.sh
+# (this assumes you already saved a CTP7ToDigi.root file with the captured information on a previous run of CTP7ToDigi_cfg.py - you will just be plotting the results)
+bash runDQMPlot.sh
 ```
 
 
