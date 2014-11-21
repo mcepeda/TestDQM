@@ -2,7 +2,7 @@ TFile * file0 ;
 
 void fastplotter(TString fileName="CTP7DQM.root",TString label="test"){
 
- gROOT->LoadMacro("plotting/tdrstyle.C");
+ gROOT->LoadMacro("tdrstyle.C");
  setTDRStyle();
   
 
