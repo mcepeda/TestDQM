@@ -33,7 +33,8 @@ cd test
 # to make sure you can play)
 bash runCaptureDQMPlot.sh
 #b2) for running only the DQM - plotting sequence
-# (this assumes you already saved a CTP7ToDigi.root file with the captured information on a previous run of CTP7ToDigi_cfg.py - you will just be plotting the results)
+# (this assumes you already saved a CTP7ToDigi.root file with the captured information 
+# on a previous run of CTP7ToDigi_cfg.py - you will just be plotting the results)
 bash runDQMPlot.sh
 ```
 
