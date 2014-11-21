@@ -1,6 +1,6 @@
 TFile * file0 ;
 
-void fastplotter(TString fileName="CTP7DQM.root",TString label="test"){
+void fastplotter(TString fileName="CTP7DQM.root"){
 
  gROOT->LoadMacro("tdrstyle.C");
  setTDRStyle();
@@ -8,33 +8,36 @@ void fastplotter(TString fileName="CTP7DQM.root",TString label="test"){
 
  file0 = new TFile(fileName,"READONLY");
 
- doHisto("RctBitHfPlusTauEtaPhi",label);;
- doHisto("RctEmIsoEmEtEtaPhi",label);;
- doHisto("RctEmIsoEmOccEtaPhi",label);;
- doHisto("RctEmNonIsoEmEtEtaPhi",label);;
- doHisto("RctEmNonIsoEmOccEtaPhi",label);;
- doHisto("RctRegionsEtEtaPhi",label);;
- doHisto("RctRegionsOccEtaPhi",label);;
- doHisto("RctEmIsoEmRank",label,false);;
- doHisto("RctEmNonIsoEmRank",label,false);;
- doHisto("RctRegionRank",label,false);;
+ doHisto("RctBitHfPlusTauEtaPhi","Hf Plus Tau Bit");;
+ doHisto("RctEmIsoEmEtEtaPhi","EmIso Occupancy (ET in z axis)");;
+ doHisto("RctEmIsoEmOccEtaPhi","EmIso Occupancy");;
+ doHisto("RctEmNonIsoEmEtEtaPhi","EmNonIso Occupancy (ET in z axis)");;
+ doHisto("RctEmNonIsoEmOccEtaPhi","EmNonIso Occupancy");;
+ doHisto("RctRegionsEtEtaPhi","Regions Occupancy (ET in z axis)");
+ doHisto("RctRegionsOccEtaPhi","Regions Occupancy");;
+ doHisto("RctEmIsoEmRank","EmIso Rank",false);;
+ doHisto("RctEmNonIsoEmRank","EmNonIso Rank",false);;
+ doHisto("RctRegionRank","Regions Rank",false);;
 
 
 }
 
-void doHisto(TString name="RctBitHfPlusTauEtaPhi", TString label="ttbar", bool do2D=true){
- TCanvas* C1= new TCanvas(name);
+void doHisto(TString name="RctBitHfPlusTauEtaPhi", TString label="Test", bool do2D=true){
+ TCanvas* C1= new TCanvas("T"+name);
  TH1F *histo=(TH1F*)file0->Get("DQMData/L1T/L1TCTP7/"+name);
  if(do2D) {
           histo->Draw("colz,text");
           histo->SetXTitle("#eta");
           histo->SetYTitle("#phi");
+          histo->SetTitle(label);
  }
  else     {histo->Draw("hist"); 
            C1->SetLogy(true); 
           histo->SetXTitle("RANK");  
           histo->SetYTitle("Events");
+          histo->SetLineWidth(2);
+          histo->SetTitle(label);
  }
- C1->SaveAs(name+"_"+label+".png");
+ C1->SaveAs(name+".png");
 }
 
