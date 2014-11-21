@@ -1,4 +1,5 @@
 #!/bin/bash
+cmsRun CTP7ToDigi_cfg.py >& logcapture 
 cmsRun CTP7DQM_cfg.py   >& dqm.log 
 root -b -q fastplotter.C >& plots.log 
  
