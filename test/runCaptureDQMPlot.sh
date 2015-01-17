@@ -12,5 +12,8 @@ cp index.html "$foldername"
 mv CTP7DQM.root  "$foldername"
 rm DQM_V0001_R000000001__L1TMonitor__Calo__CTP7.root
 
+mkdir -p ~/www/CTP7DQMTESTS/live
+cp  "$foldername"/* ~/www/CTP7DQMTESTS/live/
+
 mkdir -p ~/www/CTP7DQMTESTS/
 mv "$foldername"  ~/www/CTP7DQMTESTS/
