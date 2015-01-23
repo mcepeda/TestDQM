@@ -11,5 +11,5 @@ rm DQM_V0001_R000000001__L1TMonitor__Calo__CTP7.root
 cp index.html "$foldername"
 
 mkdir -p ~/www/CTP7DQMTESTS/
-mv "$foldername"  ~/www/CP7DQMTESTS/
+mv "$foldername"  ~/www/CTP7DQMTESTS/
 
