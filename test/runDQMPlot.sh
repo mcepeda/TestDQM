@@ -8,8 +8,8 @@ mkdir -p "$foldername"
 cp *png *log  "$foldername"
 cp CTP7DQM.root  "$foldername"
 rm DQM_V0001_R000000001__L1TMonitor__Calo__CTP7.root
-#cp index.html "$foldername"
+cp index.html "$foldername"
 
-mkdir -p ~/www/Research/CTP7DQMTESTS/
-mv "$foldername"  ~/www/Research/CTP7DQMTESTS/
+mkdir -p ~/www/CTP7DQMTESTS/
+mv "$foldername"  ~/www/CP7DQMTESTS/
 
