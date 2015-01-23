@@ -32,7 +32,15 @@ const unsigned int ETABINS = 22;
 const float ETAMIN = -0.5;
 const float ETAMAX = 21.5;
 
+const unsigned int EVBINS = 400;
+const float EVMIN = -0.5;
+const float EVMAX = 399.5;
 
+
+
+const unsigned int PUMBINS = 22;
+const float PUMMIN = -0.5;
+const float PUMMAX = 21.5;
 
 L1TCTP7::L1TCTP7(const ParameterSet & ps) :
    ctp7Source_L1CRCollection_( consumes<L1CaloRegionCollection>(ps.getParameter< InputTag >("ctp7Source") )),
@@ -97,6 +105,80 @@ void L1TCTP7::beginRun(edm::Run const& iRun, edm::EventSetup const& iSetup)
 
     triggerType_ =
       dbe->book1D("TriggerType", "TriggerType", 17, -0.5, 16.5);
+    // global regions
+    ctp7RegionsNonZeroVsEvt_ =
+	dbe->book2D("RctRegionsNonZeroVsEvt", "REGION PUM vs Event", EVBINS, EVMIN,
+                    EVMAX, PUMBINS, PUMMIN, PUMMAX);
+
+    // global regions
+    ctp7RegionsNonZero_ =
+	dbe->book1D("RctRegionsNonZero", "REGION PUM", PUMBINS, PUMMIN, PUMMAX);
+    ctp7RegionsPumEta0_ =
+	dbe->book2D("RctRegionsPumEta0", " PUM BIN", PUMBINS, PUMMIN,
+		    PUMMAX, R10BINS, R10MIN, R10MAX);
+    ctp7RegionsPumEta1_ =
+	dbe->book2D("RctRegionsPumEta1", " PUM BIN", PUMBINS, PUMMIN,
+		    PUMMAX, R10BINS, R10MIN, R10MAX);
+    ctp7RegionsPumEta2_ =
+        dbe->book2D("RctRegionsPumEta2", " PUM BIN", PUMBINS, PUMMIN,
+                    PUMMAX, R10BINS, R10MIN, R10MAX);
+    ctp7RegionsPumEta3_ =
+        dbe->book2D("RctRegionsPumEta3", " PUM BIN", PUMBINS, PUMMIN,
+                    PUMMAX, R10BINS, R10MIN, R10MAX);
+    ctp7RegionsPumEta4_ =
+        dbe->book2D("RctRegionsPumEta4", " PUM BIN", PUMBINS, PUMMIN,
+                    PUMMAX, R10BINS, R10MIN, R10MAX);
+    ctp7RegionsPumEta5_ =
+        dbe->book2D("RctRegionsPumEta5", " PUM BIN", PUMBINS, PUMMIN,
+                    PUMMAX, R10BINS, R10MIN, R10MAX);
+    ctp7RegionsPumEta6_ =
+        dbe->book2D("RctRegionsPumEta6", " PUM BIN", PUMBINS, PUMMIN,
+                    PUMMAX, R10BINS, R10MIN, R10MAX);
+    ctp7RegionsPumEta7_ =
+        dbe->book2D("RctRegionsPumEta7", " PUM BIN", PUMBINS, PUMMIN,
+                    PUMMAX, R10BINS, R10MIN, R10MAX);
+    ctp7RegionsPumEta8_ =
+        dbe->book2D("RctRegionsPumEta8", " PUM BIN", PUMBINS, PUMMIN,
+                    PUMMAX, R10BINS, R10MIN, R10MAX);
+    ctp7RegionsPumEta9_ =
+        dbe->book2D("RctRegionsPumEta9", " PUM BIN", PUMBINS, PUMMIN,
+                    PUMMAX, R10BINS, R10MIN, R10MAX);
+    ctp7RegionsPumEta10_ =
+	dbe->book2D("RctRegionsPumEta10", " PUM BIN", PUMBINS, PUMMIN,
+		    PUMMAX, R10BINS, R10MIN, R10MAX);
+    ctp7RegionsPumEta11_ =
+	dbe->book2D("RctRegionsPumEta11", " PUM BIN", PUMBINS, PUMMIN,
+		    PUMMAX, R10BINS, R10MIN, R10MAX);
+    ctp7RegionsPumEta12_ =
+        dbe->book2D("RctRegionsPumEta12", " PUM BIN", PUMBINS, PUMMIN,
+                    PUMMAX, R10BINS, R10MIN, R10MAX);
+    ctp7RegionsPumEta13_ =
+        dbe->book2D("RctRegionsPumEta13", " PUM BIN", PUMBINS, PUMMIN,
+                    PUMMAX, R10BINS, R10MIN, R10MAX);
+    ctp7RegionsPumEta14_ =
+        dbe->book2D("RctRegionsPumEta14", " PUM BIN", PUMBINS, PUMMIN,
+                    PUMMAX, R10BINS, R10MIN, R10MAX);
+    ctp7RegionsPumEta15_ =
+        dbe->book2D("RctRegionsPumEta15", " PUM BIN", PUMBINS, PUMMIN,
+                    PUMMAX, R10BINS, R10MIN, R10MAX);
+    ctp7RegionsPumEta16_ =
+        dbe->book2D("RctRegionsPumEta16", " PUM BIN", PUMBINS, PUMMIN,
+                    PUMMAX, R10BINS, R10MIN, R10MAX);
+    ctp7RegionsPumEta17_ =
+        dbe->book2D("RctRegionsPumEta17", " PUM BIN", PUMBINS, PUMMIN,
+                    PUMMAX, R10BINS, R10MIN, R10MAX);
+    ctp7RegionsPumEta18_ =
+        dbe->book2D("RctRegionsPumEta18", " PUM BIN", PUMBINS, PUMMIN,
+                    PUMMAX, R10BINS, R10MIN, R10MAX);
+    ctp7RegionsPumEta19_ =
+        dbe->book2D("RctRegionsPumEta19", " PUM BIN", PUMBINS, PUMMIN,
+                    PUMMAX, R10BINS, R10MIN, R10MAX);
+    ctp7RegionsPumEta20_ =
+        dbe->book2D("RctRegionsPumEta20", " PUM BIN", PUMBINS, PUMMIN,
+                    PUMMAX, R10BINS, R10MIN, R10MAX);
+    ctp7RegionsPumEta21_ =
+        dbe->book2D("RctRegionsPumEta21", " PUM BIN", PUMBINS, PUMMIN,
+                    PUMMAX, R10BINS, R10MIN, R10MAX);
 
     ctp7IsoEmEtEtaPhi_ =
 	dbe->book2D("RctEmIsoEmEtEtaPhi", "ISO EM E_{T}", ETABINS, ETAMIN,
@@ -250,12 +332,13 @@ void L1TCTP7::analyze(const Event & e, const EventSetup & c)
 
   if ( doHd ) {
     // Fill the RCT histograms
-
+    int pum = 0;
     // Regions
     for (L1CaloRegionCollection::const_iterator ireg = rgn->begin();
 	 ireg != rgn->end(); ireg++) {
       if(ireg->et()>0)
       {
+      pum++;
       ctp7RegionRank_->Fill(ireg->et());
       if(ireg->et()>5){
 	ctp7RegionsOccEtaPhi_->Fill(ireg->gctEta(), ireg->gctPhi());
@@ -273,14 +356,44 @@ void L1TCTP7::analyze(const Event & e, const EventSetup & c)
       ctp7RegionBx_->Fill(ireg->bx());
       }
 
+
     if(ireg->overFlow())  ctp7OverFlowEtaPhi_ ->Fill(ireg->gctEta(), ireg->gctPhi());
     if(ireg->tauVeto())   ctp7TauVetoEtaPhi_  ->Fill(ireg->gctEta(), ireg->gctPhi());
     if(ireg->mip())       ctp7MipEtaPhi_      ->Fill(ireg->gctEta(), ireg->gctPhi());
     if(ireg->quiet())     ctp7QuietEtaPhi_    ->Fill(ireg->gctEta(), ireg->gctPhi());
     if(ireg->fineGrain()) ctp7HfPlusTauEtaPhi_->Fill(ireg->gctEta(), ireg->gctPhi()); 
     
+    }//end region loop
+    ctp7RegionsNonZero_->Fill(pum/PUMBINS);
+    ctp7RegionsNonZeroVsEvt_->Fill(nev_,pum/PUMBINS);
+    //second 
+    for (L1CaloRegionCollection::const_iterator ireg = rgn->begin();
+         ireg != rgn->end(); ireg++) {
+      if (ireg->gctEta()==0) ctp7RegionsPumEta0_->Fill(pum/PUMBINS,ireg->et());
+      else if (ireg->gctEta()==1) ctp7RegionsPumEta1_->Fill(pum/PUMBINS,ireg->et());
+      else if (ireg->gctEta()==2) ctp7RegionsPumEta2_->Fill(pum/PUMBINS,ireg->et());
+      else if (ireg->gctEta()==3) ctp7RegionsPumEta3_->Fill(pum/PUMBINS,ireg->et());
+      else if (ireg->gctEta()==4) ctp7RegionsPumEta4_->Fill(pum/PUMBINS,ireg->et());
+      else if (ireg->gctEta()==5) ctp7RegionsPumEta5_->Fill(pum/PUMBINS,ireg->et());
+      else if (ireg->gctEta()==6) ctp7RegionsPumEta6_->Fill(pum/PUMBINS,ireg->et());
+      else if (ireg->gctEta()==7) ctp7RegionsPumEta7_->Fill(pum/PUMBINS,ireg->et());
+      else if (ireg->gctEta()==8) ctp7RegionsPumEta8_->Fill(pum/PUMBINS,ireg->et());
+      else if (ireg->gctEta()==9) ctp7RegionsPumEta9_->Fill(pum/PUMBINS,ireg->et());
+      else if (ireg->gctEta()==10) ctp7RegionsPumEta10_->Fill(pum/PUMBINS,ireg->et());
+      else if (ireg->gctEta()==11) ctp7RegionsPumEta11_->Fill(pum/PUMBINS,ireg->et());
+      else if (ireg->gctEta()==12) ctp7RegionsPumEta12_->Fill(pum/PUMBINS,ireg->et());
+      else if (ireg->gctEta()==13) ctp7RegionsPumEta13_->Fill(pum/PUMBINS,ireg->et());
+      else if (ireg->gctEta()==14) ctp7RegionsPumEta14_->Fill(pum/PUMBINS,ireg->et());
+      else if (ireg->gctEta()==15) ctp7RegionsPumEta15_->Fill(pum/PUMBINS,ireg->et());
+      else if (ireg->gctEta()==16) ctp7RegionsPumEta16_->Fill(pum/PUMBINS,ireg->et());
+      else if (ireg->gctEta()==17) ctp7RegionsPumEta17_->Fill(pum/PUMBINS,ireg->et());
+      else if (ireg->gctEta()==18) ctp7RegionsPumEta18_->Fill(pum/PUMBINS,ireg->et());
+      else if (ireg->gctEta()==19) ctp7RegionsPumEta19_->Fill(pum/PUMBINS,ireg->et());
+      else if (ireg->gctEta()==20) ctp7RegionsPumEta20_->Fill(pum/PUMBINS,ireg->et());
+      else if (ireg->gctEta()==21) ctp7RegionsPumEta21_->Fill(pum/PUMBINS,ireg->et());
     }
-  }
+
+  }//end doHd
 
   
   e.getByToken(ctp7Source_L1CEMCollection_,em);

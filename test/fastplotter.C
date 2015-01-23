@@ -18,17 +18,23 @@ void fastplotter(TString fileName="CTP7DQM.root"){
  doHisto("RctEmIsoEmRank","EmIso Rank",false);;
  doHisto("RctEmNonIsoEmRank","EmNonIso Rank",false);;
  doHisto("RctRegionRank","Regions Rank",false);;
-
-
+ doHisto("RctRegionsNonZero","Non Zero Regions",false);;
 }
 
-void doHisto(TString name="RctBitHfPlusTauEtaPhi", TString label="Test", bool do2D=true){
+//doPUM option used in pumplotter.cc
+void doHisto(TString name="RctBitHfPlusTauEtaPhi", TString label="Test", bool do2D=true, bool doPUM=false){
  TCanvas* C1= new TCanvas("T"+name);
  TH1F *histo=(TH1F*)file0->Get("DQMData/L1T/L1TCTP7/"+name);
  if(do2D) {
           histo->Draw("colz,text");
           histo->SetXTitle("#eta");
           histo->SetYTitle("#phi");
+          histo->SetTitle(label);
+ }
+ else if(doPUM){
+          histo->Draw("colz,text");
+          histo->SetXTitle("PUM bin");
+          histo->SetYTitle("Rank");
           histo->SetTitle(label);
  }
  else     {histo->Draw("hist"); 
@@ -39,5 +45,18 @@ void doHisto(TString name="RctBitHfPlusTauEtaPhi", TString label="Test", bool do
           histo->SetTitle(label);
  }
  C1->SaveAs(name+".png");
+if (doPUM) doProfile(name,"Avg "+label);;
+}
+
+void doProfile(TString name="RctRegionsPumEta10",TString label="Test"){
+ TCanvas* C1= new TCanvas("T"+name);
+ TH2F *histo=(TH2F*)file0->Get("DQMData/L1T/L1TCTP7/"+name);
+ histo->Draw("colz,text");
+ histo->SetXTitle("PUM bin");
+ histo->SetYTitle("Average ET");
+ histo->SetTitle(label);
+ TProfile *prof=histo->ProfileX();
+ prof->Draw();
+ C1->SaveAs(name+"Avg"+".png");
 }
 

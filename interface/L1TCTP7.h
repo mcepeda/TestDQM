@@ -76,6 +76,31 @@ private:
 
   // Region rank
   MonitorElement* ctp7RegionRank_;
+  //PUM plot
+  MonitorElement* ctp7RegionsNonZero_;
+  MonitorElement* ctp7RegionsNonZeroVsEvt_;
+  MonitorElement* ctp7RegionsPumEta0_;
+  MonitorElement* ctp7RegionsPumEta1_;
+  MonitorElement* ctp7RegionsPumEta2_;
+  MonitorElement* ctp7RegionsPumEta3_;
+  MonitorElement* ctp7RegionsPumEta4_;
+  MonitorElement* ctp7RegionsPumEta5_;
+  MonitorElement* ctp7RegionsPumEta6_;
+  MonitorElement* ctp7RegionsPumEta7_;
+  MonitorElement* ctp7RegionsPumEta8_;
+  MonitorElement* ctp7RegionsPumEta9_;
+  MonitorElement* ctp7RegionsPumEta10_;
+  MonitorElement* ctp7RegionsPumEta11_;
+  MonitorElement* ctp7RegionsPumEta12_;
+  MonitorElement* ctp7RegionsPumEta13_;
+  MonitorElement* ctp7RegionsPumEta14_;
+  MonitorElement* ctp7RegionsPumEta15_;
+  MonitorElement* ctp7RegionsPumEta16_;
+  MonitorElement* ctp7RegionsPumEta17_;
+  MonitorElement* ctp7RegionsPumEta18_;
+  MonitorElement* ctp7RegionsPumEta19_;
+  MonitorElement* ctp7RegionsPumEta20_;
+  MonitorElement* ctp7RegionsPumEta21_;
 
 
   MonitorElement* ctp7OverFlowEtaPhi_;
