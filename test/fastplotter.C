@@ -47,7 +47,7 @@ void doHisto(TString name="RctBitHfPlusTauEtaPhi", TString label="Test", bool do
  C1->SaveAs(name+".png");
 if (doPUM) doProfile(name,"Avg "+label);;
 }
-
+//Duplicate function-- moved pum plots to pumplotter.cc
 void doProfile(TString name="RctRegionsPumEta10",TString label="Test"){
  TCanvas* C1= new TCanvas("T"+name);
  TH2F *histo=(TH2F*)file0->Get("DQMData/L1T/L1TCTP7/"+name);
