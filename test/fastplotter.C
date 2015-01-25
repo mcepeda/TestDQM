@@ -18,7 +18,6 @@ void fastplotter(TString fileName="CTP7DQM.root"){
  doHisto("RctEmIsoEmRank","EmIso Rank",false);;
  doHisto("RctEmNonIsoEmRank","EmNonIso Rank",false);;
  doHisto("RctRegionRank","Regions Rank",false);;
- doHisto("RctRegionsNonZero","Non Zero Regions",false);;
 }
 
 //doPUM option used in pumplotter.cc
