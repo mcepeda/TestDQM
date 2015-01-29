@@ -1,6 +1,7 @@
 #!/bin/bash
 cmsRun CTP7DQM_cfg.py   >& dqm.log 
 root -b -q fastplotter.C >& plots.log 
+root -b -q pumplotter.C >& pumplots.log 
 
 foldername=$(date +%Y%m%d_%H%M%S)
 mkdir -p "$foldername" 
