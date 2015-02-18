@@ -3,6 +3,11 @@ TestRCTOfflineDQM
 
 Monitoring standalone the status of RCT, from a file with digis
 
+This is almost *identical* to <a href="https://github.com/cms-sw/cmssw/blob/CMSSW_7_4_X/DQM/L1TMonitor/src/L1TRCT.cc"> RCT DQM module in CMSSW </a> , it just runs standalone. 
+
+A example of a <a href="https://cmsweb.cern.ch/dqm/online/start?runnr=193556;dataset=/Global/Online/ALL;sampletype=online_data;filter=all;referencepos=overlay;referenceshow=customise;referenceobj1=refobj;referenceobj2=none;referenceobj3=none;referenceobj4=none;search=;striptype=object;stripruns=;stripaxis=run;stripomit=none;workspace=L1T;size=M;root=L1T/L1TRCT;focus=;zoom=no">good 2012 run for reference</a>. 
+
+
 a) Install
 ----------
 ```bash 
