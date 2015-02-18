@@ -1,5 +1,5 @@
-#ifndef L1TCTP7_H
-#define L1TCTP7_H
+#ifndef L1TRCTOffline_H
+#define L1TRCTOffline_H
 
 // system include files
 #include <memory>
@@ -35,15 +35,15 @@
 // class declaration
 //
 
-class L1TCTP7 : public edm::EDAnalyzer {
+class L1TRCTOffline : public edm::EDAnalyzer {
 
 public:
 
 // Constructor
-  L1TCTP7(const edm::ParameterSet& ps);
+  L1TRCTOffline(const edm::ParameterSet& ps);
 
 // Destructor
- virtual ~L1TCTP7();
+ virtual ~L1TRCTOffline();
 
 protected:
 // Analyze
@@ -127,7 +127,7 @@ private:
   MonitorElement* ctp7NonIsoEmOccEtaPhi_;
   MonitorElement* ctp7IsoEmRank_;
   MonitorElement* ctp7NonIsoEmRank_;
-
+  MonitorElement* ctp7RegionsMaxEtVsEvt_;
 
   int nev_; // Number of events processed
   std::string outputFile_; //file name for ROOT ouput

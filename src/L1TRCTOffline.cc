@@ -1,11 +1,11 @@
 /*
- * \file L1TCTP7.cc
+ * \file L1TRCTOffline.cc
  *
  * \author P. Wittich
  *
  */
 
-#include "CTP7Tests/CTP7DQM/interface/L1TCTP7.h"
+#include "RCTOfflineTests/RCTOfflineDQM/interface/L1TRCTOffline.h"
 #include "DataFormats/Provenance/interface/EventAuxiliary.h"
 
 //DQMStore
@@ -44,7 +44,7 @@ const unsigned int PUMBINS = 22;
 const float PUMMIN = -0.5;
 const float PUMMAX = 21.5;
 
-L1TCTP7::L1TCTP7(const ParameterSet & ps) :
+L1TRCTOffline::L1TRCTOffline(const ParameterSet & ps) :
    ctp7Source_L1CRCollection_( consumes<L1CaloRegionCollection>(ps.getParameter< InputTag >("ctp7Source") )),
    ctp7Source_L1CEMCollection_( consumes<L1CaloEmCollection>(ps.getParameter< InputTag >("ctp7Source") )),
    filterTriggerType_ (ps.getParameter< int >("filterTriggerType"))
@@ -54,7 +54,7 @@ L1TCTP7::L1TCTP7(const ParameterSet & ps) :
   verbose_ = ps.getUntrackedParameter < bool > ("verbose", false);
 
   if (verbose_)
-    std::cout << "L1TCTP7: constructor...." << std::endl;
+    std::cout << "L1TRCTOffline: constructor...." << std::endl;
 
 
   dbe = NULL;
@@ -79,22 +79,22 @@ L1TCTP7::L1TCTP7(const ParameterSet & ps) :
 
 
   if (dbe != NULL) {
-    dbe->setCurrentFolder("L1T/L1TCTP7");
+    dbe->setCurrentFolder("L1T/L1TRCTOffline");
   }
 
 
 }
 
-L1TCTP7::~L1TCTP7()
+L1TRCTOffline::~L1TRCTOffline()
 {
 }
 
-void L1TCTP7::beginJob(void)
+void L1TRCTOffline::beginJob(void)
 {
   nev_ = 0;
 }
 
-void L1TCTP7::beginRun(edm::Run const& iRun, edm::EventSetup const& iSetup)
+void L1TRCTOffline::beginRun(edm::Run const& iRun, edm::EventSetup const& iSetup)
 {
   //Only histograms booking
 
@@ -103,7 +103,7 @@ void L1TCTP7::beginRun(edm::Run const& iRun, edm::EventSetup const& iSetup)
   dbe = Service < DQMStore > ().operator->();
 
   if (dbe) {
-    dbe->setCurrentFolder("L1T/L1TCTP7");
+    dbe->setCurrentFolder("L1T/L1TRCTOffline");
 
     triggerType_ =
       dbe->book1D("TriggerType", "TriggerType", 17, -0.5, 16.5);
@@ -113,6 +113,10 @@ void L1TCTP7::beginRun(edm::Run const& iRun, edm::EventSetup const& iSetup)
                     EVMAX, PUMBINS, PUMMIN, PUMMAX);
     ctp7RegionsAvgEtVsEvt_ = 
 	dbe->book2D("RctRegionsAvgEtVsEvt", " AVERAGE REGION RANK vs EVT", EVBINS, EVMIN,
+                    EVMAX, R10BINS, R10MIN, R10MAX);
+
+    ctp7RegionsMaxEtVsEvt_ =
+        dbe->book2D("RctRegionsMaxEtVsEvt", " MAX REGION RANK vs EVT", EVBINS, EVMIN,
                     EVMAX, R10BINS, R10MIN, R10MAX);
 
     ctp7RegionsAverageRegionEt_ =
@@ -274,10 +278,10 @@ void L1TCTP7::beginRun(edm::Run const& iRun, edm::EventSetup const& iSetup)
   }
 }
 
-void L1TCTP7::endJob(void)
+void L1TRCTOffline::endJob(void)
 {
   if (verbose_)
-    std::cout << "L1TCTP7: end job...." << std::endl;
+    std::cout << "L1TRCTOffline: end job...." << std::endl;
   LogInfo("EndJob") << "analyzed " << nev_ << " events";
 
   if (outputFile_.size() != 0 && dbe)
@@ -286,11 +290,11 @@ void L1TCTP7::endJob(void)
   return;
 }
 
-void L1TCTP7::analyze(const Event & e, const EventSetup & c)
+void L1TRCTOffline::analyze(const Event & e, const EventSetup & c)
 {
   nev_++;
   if (verbose_) {
-    std::cout << "L1TCTP7: analyze...." << std::endl;
+    std::cout << "L1TRCTOffline: analyze...." << std::endl;
   }
 
   // filter according trigger type
@@ -319,7 +323,7 @@ void L1TCTP7::analyze(const Event & e, const EventSetup & c)
       if (e.isRealData()) {
           if (!(e.experimentType() == filterTriggerType_)) {
 
-              edm::LogInfo("L1TCTP7") << "\n Event of TriggerType "
+              edm::LogInfo("L1TRCTOffline") << "\n Event of TriggerType "
                       << e.experimentType() << " rejected" << std::endl;
               return;
 
@@ -346,6 +350,8 @@ void L1TCTP7::analyze(const Event & e, const EventSetup & c)
     // Fill the RCT histograms
     int nonzeroregions = 0;
     int totalregionet = 0;
+    int maxregionet = 0;
+
     // Regions
     for (L1CaloRegionCollection::const_iterator ireg = rgn->begin();
 	 ireg != rgn->end(); ireg++) {
@@ -353,6 +359,8 @@ void L1TCTP7::analyze(const Event & e, const EventSetup & c)
       {
       nonzeroregions++;
       totalregionet += ireg->et();
+      if(ireg->et()>maxregionet) maxregionet=ireg->et();        
+
       ctp7RegionRank_->Fill(ireg->et());
       if(ireg->et()>5){
 	ctp7RegionsOccEtaPhi_->Fill(ireg->gctEta(), ireg->gctPhi());
@@ -381,6 +389,8 @@ void L1TCTP7::analyze(const Event & e, const EventSetup & c)
     //
     ctp7RegionsAverageRegionEt_->Fill(totalregionet/NUMREGIONS);
     ctp7RegionsAvgEtVsEvt_->Fill(nev_,totalregionet/NUMREGIONS);
+    ctp7RegionsMaxEtVsEvt_->Fill(nev_,maxregionet);
+
     ctp7RegionsNonZero_->Fill(nonzeroregions/PUMBINS);
     ctp7RegionsNonZeroVsEvt_->Fill(nev_,nonzeroregions/PUMBINS);
     //second region loop necessary because pum found in prior loop  

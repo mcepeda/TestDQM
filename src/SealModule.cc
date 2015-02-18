@@ -2,6 +2,6 @@
 
 #include "FWCore/Framework/interface/MakerMacros.h"
 
-#include <CTP7Tests/CTP7DQM/interface/L1TCTP7.h>
-DEFINE_FWK_MODULE(L1TCTP7);
+#include <RCTOfflineTests/RCTOfflineDQM/interface/L1TRCTOffline.h>
+DEFINE_FWK_MODULE(L1TRCTOffline);
 

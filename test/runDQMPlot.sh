@@ -1,15 +1,26 @@
-#!/bin/bash
-cmsRun CTP7DQM_cfg.py   >& dqm.log 
-root -b -q fastplotter.C >& plots.log 
-root -b -q pumplotter.C >& pumplots.log 
+#!/bin/bash 
+# Run CMSSW Programs
+cmsRun RCTOfflineDQMForCommissioning_cfg.py   >& dqm.log 
 
-foldername=$(date +%Y%m%d_%H%M%S)
+# Plot
+root -b -q macros/fastplotterMC.C >& plots.log 
+
+# Format for web
+foldername="TestFromDigis"_$(date +_%Y%m%d_%H%M%S)
+echo Creating $foldername
+
 mkdir -p "$foldername" 
-cp *png *log  "$foldername"
-cp CTP7DQM.root  "$foldername"
-rm DQM_V0001_R000000001__L1TMonitor__Calo__CTP7.root
-cp index.html "$foldername"
+mv *png  "$foldername"
+mv *log "$foldername"
+cp templates/indexMC.html "$foldername"/index.html
+cp templates/*Details.html "$foldername"
 
-mkdir -p ~/www/CTP7DQMTESTS/
-mv "$foldername"  ~/www/CTP7DQMTESTS/
+mv RCTOfflineDQMMC.root  "$foldername"
+rm DQM_*__L1TMonitor__Calo__RCTOffline.root
 
+#    If you have access to a www folder you can do this     
+#    mkdir -p ~/www/RCTOfflineDQMTESTS/testforIsobel
+#    cp  "$foldername"/* ~/www/RCTOfflineDQMTESTS/testforIsobel/
+    
+
+    

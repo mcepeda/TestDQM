@@ -1,9 +1,13 @@
+#include "drawGridRct.C"
+#include "tdrstyle.C"
 TFile * file0 ;
 
-void fastplotter(TString fileName="CTP7DQM.root"){
+void fastplotterMC(TString fileName="RCTOfflineDQMMC.root"){
 
- gROOT->LoadMacro("tdrstyle.C");
+//# gROOT->LoadMacro("Â$CMRCTOfflineTests/RCTOfflineDQM/testMC/tdrstyle.C");
  setTDRStyle();
+
+   gStyle->SetPalette(55);
   
 
  file0 = new TFile(fileName,"READONLY");
@@ -28,12 +32,15 @@ void fastplotter(TString fileName="CTP7DQM.root"){
 //doPUM option used in pumplotter.cc
 void doHisto(TString name="RctBitHfPlusTauEtaPhi", TString label="Test", bool do2D=true, bool doPUM=false, bool doZoom=false){
  TCanvas* C1= new TCanvas("T"+name);
- TH1F *histo=(TH1F*)file0->Get("DQMData/L1T/L1TCTP7/"+name);
+ TH1F *histo=(TH1F*)file0->Get("DQMData/L1T/L1TRCTOffline/"+name);
  if(do2D) {
           histo->Draw("colz,text");
           histo->SetXTitle("#eta");
           histo->SetYTitle("#phi");
           histo->SetTitle(label);
+
+          drawGridRct();
+
  }
  else if(doPUM){
           histo->Draw("colz,text");
@@ -66,7 +73,7 @@ if (doPUM) doProfile(name,"Avg "+label);;
 //Duplicate function-- moved pum plots to pumplotter.cc
 void doProfile(TString name="RctRegionsPumEta10",TString label="Test"){
  TCanvas* C1= new TCanvas("T"+name);
- TH2F *histo=(TH2F*)file0->Get("DQMData/L1T/L1TCTP7/"+name);
+ TH2F *histo=(TH2F*)file0->Get("DQMData/L1T/L1TRCTOffline/"+name);
  histo->Draw("colz,text");
  histo->SetXTitle("PUM bin");
  histo->SetYTitle("Average ET");

@@ -10,9 +10,7 @@ process.maxEvents = cms.untracked.PSet(
 
 process.source = cms.Source("PoolSource",
                             fileNames = cms.untracked.vstring(
-    'file:../../CreateRCTPatternsMC/rct.root'
-    #'file:keep/ttbar64.root' 
-    #'file:keep/stangepatterncard6.root' 
+"file:/afs/cern.ch/user/g/ginnocen/public/L1T_PACK_stage1_EDM.root"
 )
 )
 
@@ -23,17 +21,17 @@ process.MessageLogger = cms.Service("MessageLogger",
     detailedInfo = cms.untracked.PSet(
             default = cms.untracked.PSet( limit = cms.untracked.int32(-1) ),
             threshold = cms.untracked.string('DEBUG')
-           #threshold = cms.untracked.string('ERROR')
     )
 )
 
-process.dqmSaver.workflow = cms.untracked.string('/L1TMonitor/Calo/CTP7')
+process.dqmSaver.workflow = cms.untracked.string('/L1TMonitor/Calo/RCTOffline')
 
-process.l1tctp7 = cms.EDAnalyzer("L1TCTP7",
+process.l1tctp7 = cms.EDAnalyzer("L1TRCTOffline",
     DQMStore = cms.untracked.bool(True),
     disableROOToutput = cms.untracked.bool(False),
-    outputFile = cms.untracked.string('./CTP7DQMMC.root'),
+    outputFile = cms.untracked.string('./RCTOfflineDQMMC.root'),
     ctp7Source = cms.InputTag("simRctDigis"),
+#    ctp7Source = cms.InputTag("caloStage1Digis"),
     verbose = cms.untracked.bool(False),
     filterTriggerType  = cms.int32(-1)
 )
@@ -42,11 +40,4 @@ process.l1tctp7 = cms.EDAnalyzer("L1TCTP7",
 process.p = cms.Path(process.l1tctp7+process.dqmSaver)
 
 
-# For faster debugging & extra couts we can also work with a standard analyzer
-#process.ctp7protodqm = cms.EDAnalyzer('CTP7DQM')
-#process.TFileService = cms.Service(
-#  "TFileService",
-#  fileName = cms.string("test.root")
-#  )
-#process.p2 = cms.Path(process.ctp7protodqm)
 
