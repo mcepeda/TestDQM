@@ -16,7 +16,11 @@ cd RCTOfflineTests/RCTOfflineDQM/test
 
 b) Run
 ------
-#edit  RCTOfflineDQMForCommissioning_cfg.py to include your MC/Emulation file & check that the 
-#name of the rctDigis is the correct one (can be simRctDigis or  caloStage1Digis  or similar collection)
-bash runDQMPlot.sh
+edit  RCTOfflineDQMForCommissioning_cfg.py to include your MC/Emulation file & check that the 
+name of the rctDigis is the correct one (can be simRctDigis or  caloStage1Digis  or similar collection)
 
+```bash 
+bash runDQMPlot.sh
+```
+
+This creates a folder with plots & with the .html files needed to display this in a webbrowser. If you have access to a webpage from your userarea, just copy the folder.
