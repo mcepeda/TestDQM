@@ -7,6 +7,7 @@ This is almost *identical* to <a href="https://github.com/cms-sw/cmssw/blob/CMSS
 
 A example of a <a href="https://cmsweb.cern.ch/dqm/online/start?runnr=193556;dataset=/Global/Online/ALL;sampletype=online_data;filter=all;referencepos=overlay;referenceshow=customise;referenceobj1=refobj;referenceobj2=none;referenceobj3=none;referenceobj4=none;search=;striptype=object;stripruns=;stripaxis=run;stripomit=none;workspace=L1T;size=M;root=L1T/L1TRCT;focus=;zoom=no">good 2012 run for reference</a>. 
 
+(Note: there is another instance of this code in the RCT Offline DQM that Pam or the RCT oncall run regularly on the already collected raw data for our weekly RCT certification. The plots are identical in format.)
 
 a) Install
 ----------
