@@ -66,68 +66,68 @@ private:
   MonitorElement *triggerType_;
 
   // region global coordinates
-  MonitorElement* ctp7RegionsEtEtaPhi_;
-  MonitorElement* ctp7RegionsOccEtaPhi_;
+  MonitorElement* rctRegionsEtEtaPhi_;
+  MonitorElement* rctRegionsOccEtaPhi_;
 
   // region local coordinates
-  MonitorElement* ctp7RegionsLocalEtEtaPhi_;
-  MonitorElement* ctp7RegionsLocalOccEtaPhi_;
-  MonitorElement* ctp7TauVetoLocalEtaPhi_;
+  MonitorElement* rctRegionsLocalEtEtaPhi_;
+  MonitorElement* rctRegionsLocalOccEtaPhi_;
+  MonitorElement* rctTauVetoLocalEtaPhi_;
 
   // Region rank
-  MonitorElement* ctp7RegionRank_;
+  MonitorElement* rctRegionRank_;
   //PUM plot
-  MonitorElement* ctp7RegionsNonZero_;
-  MonitorElement* ctp7RegionsNonZeroVsEvt_;
-  MonitorElement* ctp7RegionsAvgEtVsEvt_;
-  MonitorElement* ctp7RegionsAverageRegionEt_;
-  MonitorElement* ctp7RegionsAvgEtVsEta_;
-  MonitorElement* ctp7RegionsPumEta0_;
-  MonitorElement* ctp7RegionsPumEta1_;
-  MonitorElement* ctp7RegionsPumEta2_;
-  MonitorElement* ctp7RegionsPumEta3_;
-  MonitorElement* ctp7RegionsPumEta4_;
-  MonitorElement* ctp7RegionsPumEta5_;
-  MonitorElement* ctp7RegionsPumEta6_;
-  MonitorElement* ctp7RegionsPumEta7_;
-  MonitorElement* ctp7RegionsPumEta8_;
-  MonitorElement* ctp7RegionsPumEta9_;
-  MonitorElement* ctp7RegionsPumEta10_;
-  MonitorElement* ctp7RegionsPumEta11_;
-  MonitorElement* ctp7RegionsPumEta12_;
-  MonitorElement* ctp7RegionsPumEta13_;
-  MonitorElement* ctp7RegionsPumEta14_;
-  MonitorElement* ctp7RegionsPumEta15_;
-  MonitorElement* ctp7RegionsPumEta16_;
-  MonitorElement* ctp7RegionsPumEta17_;
-  MonitorElement* ctp7RegionsPumEta18_;
-  MonitorElement* ctp7RegionsPumEta19_;
-  MonitorElement* ctp7RegionsPumEta20_;
-  MonitorElement* ctp7RegionsPumEta21_;
+  MonitorElement* rctRegionsNonZero_;
+  MonitorElement* rctRegionsNonZeroVsEvt_;
+  MonitorElement* rctRegionsAvgEtVsEvt_;
+  MonitorElement* rctRegionsAverageRegionEt_;
+  MonitorElement* rctRegionsAvgEtVsEta_;
+  MonitorElement* rctRegionsPumEta0_;
+  MonitorElement* rctRegionsPumEta1_;
+  MonitorElement* rctRegionsPumEta2_;
+  MonitorElement* rctRegionsPumEta3_;
+  MonitorElement* rctRegionsPumEta4_;
+  MonitorElement* rctRegionsPumEta5_;
+  MonitorElement* rctRegionsPumEta6_;
+  MonitorElement* rctRegionsPumEta7_;
+  MonitorElement* rctRegionsPumEta8_;
+  MonitorElement* rctRegionsPumEta9_;
+  MonitorElement* rctRegionsPumEta10_;
+  MonitorElement* rctRegionsPumEta11_;
+  MonitorElement* rctRegionsPumEta12_;
+  MonitorElement* rctRegionsPumEta13_;
+  MonitorElement* rctRegionsPumEta14_;
+  MonitorElement* rctRegionsPumEta15_;
+  MonitorElement* rctRegionsPumEta16_;
+  MonitorElement* rctRegionsPumEta17_;
+  MonitorElement* rctRegionsPumEta18_;
+  MonitorElement* rctRegionsPumEta19_;
+  MonitorElement* rctRegionsPumEta20_;
+  MonitorElement* rctRegionsPumEta21_;
 
 
-  MonitorElement* ctp7OverFlowEtaPhi_;
-  MonitorElement* ctp7TauVetoEtaPhi_;
-  MonitorElement* ctp7MipEtaPhi_;
-  MonitorElement* ctp7QuietEtaPhi_;
-  MonitorElement* ctp7HfPlusTauEtaPhi_;
+  MonitorElement* rctOverFlowEtaPhi_;
+  MonitorElement* rctTauVetoEtaPhi_;
+  MonitorElement* rctMipEtaPhi_;
+  MonitorElement* rctQuietEtaPhi_;
+  MonitorElement* rctHfPlusTauEtaPhi_;
 
   // Bx
-  MonitorElement *ctp7RegionBx_;
-  MonitorElement *ctp7EmBx_;
+  MonitorElement *rctRegionBx_;
+  MonitorElement *rctEmBx_;
 
   // em
   // HW coordinates
-  MonitorElement *ctp7EmCardRegion_;
+  MonitorElement *rctEmCardRegion_;
 
 
-  MonitorElement* ctp7IsoEmEtEtaPhi_;
-  MonitorElement* ctp7IsoEmOccEtaPhi_;
-  MonitorElement* ctp7NonIsoEmEtEtaPhi_;
-  MonitorElement* ctp7NonIsoEmOccEtaPhi_;
-  MonitorElement* ctp7IsoEmRank_;
-  MonitorElement* ctp7NonIsoEmRank_;
-  MonitorElement* ctp7RegionsMaxEtVsEvt_;
+  MonitorElement* rctIsoEmEtEtaPhi_;
+  MonitorElement* rctIsoEmOccEtaPhi_;
+  MonitorElement* rctNonIsoEmEtEtaPhi_;
+  MonitorElement* rctNonIsoEmOccEtaPhi_;
+  MonitorElement* rctIsoEmRank_;
+  MonitorElement* rctNonIsoEmRank_;
+  MonitorElement* rctRegionsMaxEtVsEvt_;
 
   int nev_; // Number of events processed
   std::string outputFile_; //file name for ROOT ouput
@@ -135,8 +135,8 @@ private:
   bool monitorDaemon_;
   std::ofstream logFile_;
   
-  edm::EDGetTokenT<L1CaloRegionCollection> ctp7Source_L1CRCollection_;
-  edm::EDGetTokenT<L1CaloEmCollection> ctp7Source_L1CEMCollection_;
+  edm::EDGetTokenT<L1CaloRegionCollection> rctSource_L1CRCollection_;
+  edm::EDGetTokenT<L1CaloEmCollection> rctSource_L1CEMCollection_;
   
   /// filter TriggerType
   int filterTriggerType_;

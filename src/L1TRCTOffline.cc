@@ -45,8 +45,8 @@ const float PUMMIN = -0.5;
 const float PUMMAX = 21.5;
 
 L1TRCTOffline::L1TRCTOffline(const ParameterSet & ps) :
-   ctp7Source_L1CRCollection_( consumes<L1CaloRegionCollection>(ps.getParameter< InputTag >("ctp7Source") )),
-   ctp7Source_L1CEMCollection_( consumes<L1CaloEmCollection>(ps.getParameter< InputTag >("ctp7Source") )),
+   rctSource_L1CRCollection_( consumes<L1CaloRegionCollection>(ps.getParameter< InputTag >("rctSource") )),
+   rctSource_L1CEMCollection_( consumes<L1CaloEmCollection>(ps.getParameter< InputTag >("rctSource") )),
    filterTriggerType_ (ps.getParameter< int >("filterTriggerType"))
 {
 
@@ -108,132 +108,132 @@ void L1TRCTOffline::beginRun(edm::Run const& iRun, edm::EventSetup const& iSetup
     triggerType_ =
       dbe->book1D("TriggerType", "TriggerType", 17, -0.5, 16.5);
     // global regions
-    ctp7RegionsNonZeroVsEvt_ =
+    rctRegionsNonZeroVsEvt_ =
 	dbe->book2D("RctRegionsNonZeroVsEvt", "REGION PUM vs EVT", EVBINS, EVMIN,
                     EVMAX, PUMBINS, PUMMIN, PUMMAX);
-    ctp7RegionsAvgEtVsEvt_ = 
+    rctRegionsAvgEtVsEvt_ = 
 	dbe->book2D("RctRegionsAvgEtVsEvt", " AVERAGE REGION RANK vs EVT", EVBINS, EVMIN,
                     EVMAX, R10BINS, R10MIN, R10MAX);
 
-    ctp7RegionsMaxEtVsEvt_ =
+    rctRegionsMaxEtVsEvt_ =
         dbe->book2D("RctRegionsMaxEtVsEvt", " MAX REGION RANK vs EVT", EVBINS, EVMIN,
                     EVMAX, R10BINS, R10MIN, R10MAX);
 
-    ctp7RegionsAverageRegionEt_ =
+    rctRegionsAverageRegionEt_ =
 	dbe->book1D("RctRegionsAverageRegionEt", "AVERAGE REGION RANK", R10BINS, R10MIN, R10MAX);
 
-    ctp7RegionsAvgEtVsEta_ =
+    rctRegionsAvgEtVsEta_ =
 	dbe->book2D("RctRegionsAvgEtVsEta", " AVERAGE REGION RANK vs ETA", ETABINS, ETAMIN,
                     ETAMAX, R10BINS, R10MIN, R10MAX);
 
     // global regions
-    ctp7RegionsNonZero_ =
+    rctRegionsNonZero_ =
 	dbe->book1D("RctRegionsNonZero", "REGION PUM", PUMBINS, PUMMIN, PUMMAX);
-    ctp7RegionsPumEta0_ =
+    rctRegionsPumEta0_ =
 	dbe->book2D("RctRegionsPumEta0", " PUM BIN", PUMBINS, PUMMIN,
 		    PUMMAX, R10BINS, R10MIN, R10MAX);
-    ctp7RegionsPumEta1_ =
+    rctRegionsPumEta1_ =
 	dbe->book2D("RctRegionsPumEta1", " PUM BIN", PUMBINS, PUMMIN,
 		    PUMMAX, R10BINS, R10MIN, R10MAX);
-    ctp7RegionsPumEta2_ =
+    rctRegionsPumEta2_ =
         dbe->book2D("RctRegionsPumEta2", " PUM BIN", PUMBINS, PUMMIN,
                     PUMMAX, R10BINS, R10MIN, R10MAX);
-    ctp7RegionsPumEta3_ =
+    rctRegionsPumEta3_ =
         dbe->book2D("RctRegionsPumEta3", " PUM BIN", PUMBINS, PUMMIN,
                     PUMMAX, R10BINS, R10MIN, R10MAX);
-    ctp7RegionsPumEta4_ =
+    rctRegionsPumEta4_ =
         dbe->book2D("RctRegionsPumEta4", " PUM BIN", PUMBINS, PUMMIN,
                     PUMMAX, R10BINS, R10MIN, R10MAX);
-    ctp7RegionsPumEta5_ =
+    rctRegionsPumEta5_ =
         dbe->book2D("RctRegionsPumEta5", " PUM BIN", PUMBINS, PUMMIN,
                     PUMMAX, R10BINS, R10MIN, R10MAX);
-    ctp7RegionsPumEta6_ =
+    rctRegionsPumEta6_ =
         dbe->book2D("RctRegionsPumEta6", " PUM BIN", PUMBINS, PUMMIN,
                     PUMMAX, R10BINS, R10MIN, R10MAX);
-    ctp7RegionsPumEta7_ =
+    rctRegionsPumEta7_ =
         dbe->book2D("RctRegionsPumEta7", " PUM BIN", PUMBINS, PUMMIN,
                     PUMMAX, R10BINS, R10MIN, R10MAX);
-    ctp7RegionsPumEta8_ =
+    rctRegionsPumEta8_ =
         dbe->book2D("RctRegionsPumEta8", " PUM BIN", PUMBINS, PUMMIN,
                     PUMMAX, R10BINS, R10MIN, R10MAX);
-    ctp7RegionsPumEta9_ =
+    rctRegionsPumEta9_ =
         dbe->book2D("RctRegionsPumEta9", " PUM BIN", PUMBINS, PUMMIN,
                     PUMMAX, R10BINS, R10MIN, R10MAX);
-    ctp7RegionsPumEta10_ =
+    rctRegionsPumEta10_ =
 	dbe->book2D("RctRegionsPumEta10", " PUM BIN", PUMBINS, PUMMIN,
 		    PUMMAX, R10BINS, R10MIN, R10MAX);
-    ctp7RegionsPumEta11_ =
+    rctRegionsPumEta11_ =
 	dbe->book2D("RctRegionsPumEta11", " PUM BIN", PUMBINS, PUMMIN,
 		    PUMMAX, R10BINS, R10MIN, R10MAX);
-    ctp7RegionsPumEta12_ =
+    rctRegionsPumEta12_ =
         dbe->book2D("RctRegionsPumEta12", " PUM BIN", PUMBINS, PUMMIN,
                     PUMMAX, R10BINS, R10MIN, R10MAX);
-    ctp7RegionsPumEta13_ =
+    rctRegionsPumEta13_ =
         dbe->book2D("RctRegionsPumEta13", " PUM BIN", PUMBINS, PUMMIN,
                     PUMMAX, R10BINS, R10MIN, R10MAX);
-    ctp7RegionsPumEta14_ =
+    rctRegionsPumEta14_ =
         dbe->book2D("RctRegionsPumEta14", " PUM BIN", PUMBINS, PUMMIN,
                     PUMMAX, R10BINS, R10MIN, R10MAX);
-    ctp7RegionsPumEta15_ =
+    rctRegionsPumEta15_ =
         dbe->book2D("RctRegionsPumEta15", " PUM BIN", PUMBINS, PUMMIN,
                     PUMMAX, R10BINS, R10MIN, R10MAX);
-    ctp7RegionsPumEta16_ =
+    rctRegionsPumEta16_ =
         dbe->book2D("RctRegionsPumEta16", " PUM BIN", PUMBINS, PUMMIN,
                     PUMMAX, R10BINS, R10MIN, R10MAX);
-    ctp7RegionsPumEta17_ =
+    rctRegionsPumEta17_ =
         dbe->book2D("RctRegionsPumEta17", " PUM BIN", PUMBINS, PUMMIN,
                     PUMMAX, R10BINS, R10MIN, R10MAX);
-    ctp7RegionsPumEta18_ =
+    rctRegionsPumEta18_ =
         dbe->book2D("RctRegionsPumEta18", " PUM BIN", PUMBINS, PUMMIN,
                     PUMMAX, R10BINS, R10MIN, R10MAX);
-    ctp7RegionsPumEta19_ =
+    rctRegionsPumEta19_ =
         dbe->book2D("RctRegionsPumEta19", " PUM BIN", PUMBINS, PUMMIN,
                     PUMMAX, R10BINS, R10MIN, R10MAX);
-    ctp7RegionsPumEta20_ =
+    rctRegionsPumEta20_ =
         dbe->book2D("RctRegionsPumEta20", " PUM BIN", PUMBINS, PUMMIN,
                     PUMMAX, R10BINS, R10MIN, R10MAX);
-    ctp7RegionsPumEta21_ =
+    rctRegionsPumEta21_ =
         dbe->book2D("RctRegionsPumEta21", " PUM BIN", PUMBINS, PUMMIN,
                     PUMMAX, R10BINS, R10MIN, R10MAX);
 
-    ctp7IsoEmEtEtaPhi_ =
+    rctIsoEmEtEtaPhi_ =
 	dbe->book2D("RctEmIsoEmEtEtaPhi", "ISO EM E_{T}", ETABINS, ETAMIN,
 		    ETAMAX, PHIBINS, PHIMIN, PHIMAX);
-    ctp7IsoEmOccEtaPhi_ =
+    rctIsoEmOccEtaPhi_ =
 	dbe->book2D("RctEmIsoEmOccEtaPhi", "ISO EM OCCUPANCY", ETABINS,
 		    ETAMIN, ETAMAX, PHIBINS, PHIMIN, PHIMAX);
-    ctp7NonIsoEmEtEtaPhi_ =
+    rctNonIsoEmEtEtaPhi_ =
 	dbe->book2D("RctEmNonIsoEmEtEtaPhi", "NON-ISO EM E_{T}", ETABINS,
 		    ETAMIN, ETAMAX, PHIBINS, PHIMIN, PHIMAX);
-    ctp7NonIsoEmOccEtaPhi_ =
+    rctNonIsoEmOccEtaPhi_ =
 	dbe->book2D("RctEmNonIsoEmOccEtaPhi", "NON-ISO EM OCCUPANCY",
 		    ETABINS, ETAMIN, ETAMAX, PHIBINS, PHIMIN, PHIMAX);
 
     // global regions
-    ctp7RegionsEtEtaPhi_ =
+    rctRegionsEtEtaPhi_ =
 	dbe->book2D("RctRegionsEtEtaPhi", "REGION E_{T}", ETABINS, ETAMIN,
 		    ETAMAX, PHIBINS, PHIMIN, PHIMAX);
-    ctp7RegionsOccEtaPhi_ =
+    rctRegionsOccEtaPhi_ =
 	dbe->book2D("RctRegionsOccEtaPhi", "REGION OCCUPANCY", ETABINS,
 		    ETAMIN, ETAMAX, PHIBINS, PHIMIN, PHIMAX);
 
-    ctp7OverFlowEtaPhi_ =
+    rctOverFlowEtaPhi_ =
 	dbe->book2D("RctBitOverFlowEtaPhi", "OVER FLOW OCCUPANCY", ETABINS,
 		    ETAMIN, ETAMAX, PHIBINS, PHIMIN, PHIMAX);
 
-    ctp7TauVetoEtaPhi_ =
+    rctTauVetoEtaPhi_ =
 	dbe->book2D("RctBitTauVetoEtaPhi", "TAU VETO OCCUPANCY", ETABINS,
 		    ETAMIN, ETAMAX, PHIBINS, PHIMIN, PHIMAX);
 
-    ctp7MipEtaPhi_ =
+    rctMipEtaPhi_ =
 	dbe->book2D("RctBitMipEtaPhi", "MIP OCCUPANCY", ETABINS,
 		    ETAMIN, ETAMAX, PHIBINS, PHIMIN, PHIMAX);
 
-    ctp7QuietEtaPhi_ =
+    rctQuietEtaPhi_ =
 	dbe->book2D("RctBitQuietEtaPhi", "QUIET OCCUPANCY", ETABINS,
 		    ETAMIN, ETAMAX, PHIBINS, PHIMIN, PHIMAX);
 
-    ctp7HfPlusTauEtaPhi_ =
+    rctHfPlusTauEtaPhi_ =
 	dbe->book2D("RctBitHfPlusTauEtaPhi", "HF plus Tau OCCUPANCY", ETABINS,
 		    ETAMIN, ETAMAX, PHIBINS, PHIMIN, PHIMAX);
 
@@ -245,35 +245,35 @@ void L1TRCTOffline::beginRun(edm::Run const& iRun, edm::EventSetup const& iSetup
     const int nlocetabins = 11;
     const float locetamin = -0.5;
     const float locetamax = 10.5;
-    ctp7RegionsLocalEtEtaPhi_ =
+    rctRegionsLocalEtEtaPhi_ =
 	dbe->book2D("RctRegionsLocalEtEtaPhi", "REGION E_{T} (Local)", 
 		    nlocetabins, locetamin, locetamax,
 		    nlocphibins, locphimin, locphimax);
-    ctp7RegionsLocalOccEtaPhi_ =
+    rctRegionsLocalOccEtaPhi_ =
 	dbe->book2D("RctRegionsLocalOccEtaPhi", "REGION OCCUPANCY (Local)", 
 		    nlocetabins, locetamin, locetamax,
 		    nlocphibins, locphimin, locphimax);
-    ctp7TauVetoLocalEtaPhi_ =
+    rctTauVetoLocalEtaPhi_ =
 	dbe->book2D("RctTauLocalVetoEtaPhi", "TAU VETO OCCUPANCY (Local)",
 		    nlocetabins, locetamin, locetamax,
 		    nlocphibins, locphimin, locphimax);
 */
     // rank histos
-    ctp7RegionRank_ =
+    rctRegionRank_ =
 	dbe->book1D("RctRegionRank", "REGION RANK", R10BINS, R10MIN,
 		    R10MAX);
-    ctp7IsoEmRank_ =
+    rctIsoEmRank_ =
 	dbe->book1D("RctEmIsoEmRank", "ISO EM RANK", R6BINS, R6MIN, R6MAX);
-    ctp7NonIsoEmRank_ =
+    rctNonIsoEmRank_ =
 	dbe->book1D("RctEmNonIsoEmRank", "NON-ISO EM RANK", R6BINS, R6MIN,
 		    R6MAX);
     // hw coordinates
-//    ctp7EmCardRegion_ = dbe->book1D("ctp7EmCardRegion", "Em Card * Region",
+//    rctEmCardRegion_ = dbe->book1D("rctEmCardRegion", "Em Card * Region",
 //				   256, -127.5, 127.5);
 
     // bx histos
-    ctp7RegionBx_ = dbe->book1D("RctRegionBx", "Region BX", 256, -0.5, 4095.5);
-    ctp7EmBx_ = dbe->book1D("RctEmBx", "EM BX", 256, -0.5, 4095.5);
+    rctRegionBx_ = dbe->book1D("RctRegionBx", "Region BX", 256, -0.5, 4095.5);
+    rctEmBx_ = dbe->book1D("RctEmBx", "EM BX", 256, -0.5, 4095.5);
  
   }
 }
@@ -339,7 +339,7 @@ void L1TRCTOffline::analyze(const Event & e, const EventSetup & c)
   bool doEm = true;
   bool doHd = true;
 
-  e.getByToken(ctp7Source_L1CRCollection_,rgn);
+  e.getByToken(rctSource_L1CRCollection_,rgn);
  
   if (!rgn.isValid()) {
     edm::LogInfo("DataNotFound") << "can't find L1CaloRegionCollection";
@@ -361,113 +361,113 @@ void L1TRCTOffline::analyze(const Event & e, const EventSetup & c)
       totalregionet += ireg->et();
       if(ireg->et()>maxregionet) maxregionet=ireg->et();        
 
-      ctp7RegionRank_->Fill(ireg->et());
+      rctRegionRank_->Fill(ireg->et());
       if(ireg->et()>5){
-	ctp7RegionsOccEtaPhi_->Fill(ireg->gctEta(), ireg->gctPhi());
+	rctRegionsOccEtaPhi_->Fill(ireg->gctEta(), ireg->gctPhi());
       }
-      ctp7RegionsEtEtaPhi_->Fill(ireg->gctEta(), ireg->gctPhi(), ireg->et());
-//      ctp7TauVetoEtaPhi_->Fill(ireg->gctEta(), ireg->gctPhi(),
+      rctRegionsEtEtaPhi_->Fill(ireg->gctEta(), ireg->gctPhi(), ireg->et());
+//      rctTauVetoEtaPhi_->Fill(ireg->gctEta(), ireg->gctPhi(),
 //			      ireg->tauVeto());
 
       // now do local coordinate eta and phi
-//      ctp7RegionsLocalOccEtaPhi_->Fill(ireg->ctp7Eta(), ireg->ctp7Phi());
-//      ctp7RegionsLocalEtEtaPhi_->Fill(ireg->ctp7Eta(), ireg->ctp7Phi(), 
+//      rctRegionsLocalOccEtaPhi_->Fill(ireg->rctEta(), ireg->rctPhi());
+//      rctRegionsLocalEtEtaPhi_->Fill(ireg->rctEta(), ireg->rctPhi(), 
 //				     ireg->et());
-//      ctp7TauVetoLocalEtaPhi_->Fill(ireg->ctp7Eta(), ireg->ctp7Phi(),
+//      rctTauVetoLocalEtaPhi_->Fill(ireg->rctEta(), ireg->rctPhi(),
 //				   ireg->tauVeto());
-      ctp7RegionBx_->Fill(ireg->bx());
+      rctRegionBx_->Fill(ireg->bx());
       }
 
 
-    if(ireg->overFlow())  ctp7OverFlowEtaPhi_ ->Fill(ireg->gctEta(), ireg->gctPhi());
-    if(ireg->tauVeto())   ctp7TauVetoEtaPhi_  ->Fill(ireg->gctEta(), ireg->gctPhi());
-    if(ireg->mip())       ctp7MipEtaPhi_      ->Fill(ireg->gctEta(), ireg->gctPhi());
-    if(ireg->quiet())     ctp7QuietEtaPhi_    ->Fill(ireg->gctEta(), ireg->gctPhi());
-    if(ireg->fineGrain()) ctp7HfPlusTauEtaPhi_->Fill(ireg->gctEta(), ireg->gctPhi()); 
+    if(ireg->overFlow())  rctOverFlowEtaPhi_ ->Fill(ireg->gctEta(), ireg->gctPhi());
+    if(ireg->tauVeto())   rctTauVetoEtaPhi_  ->Fill(ireg->gctEta(), ireg->gctPhi());
+    if(ireg->mip())       rctMipEtaPhi_      ->Fill(ireg->gctEta(), ireg->gctPhi());
+    if(ireg->quiet())     rctQuietEtaPhi_    ->Fill(ireg->gctEta(), ireg->gctPhi());
+    if(ireg->fineGrain()) rctHfPlusTauEtaPhi_->Fill(ireg->gctEta(), ireg->gctPhi()); 
     
     }//end region loop
     //
-    ctp7RegionsAverageRegionEt_->Fill(totalregionet/NUMREGIONS);
-    ctp7RegionsAvgEtVsEvt_->Fill(nev_,totalregionet/NUMREGIONS);
-    ctp7RegionsMaxEtVsEvt_->Fill(nev_,maxregionet);
+    rctRegionsAverageRegionEt_->Fill(totalregionet/NUMREGIONS);
+    rctRegionsAvgEtVsEvt_->Fill(nev_,totalregionet/NUMREGIONS);
+    rctRegionsMaxEtVsEvt_->Fill(nev_,maxregionet);
 
-    ctp7RegionsNonZero_->Fill(nonzeroregions/PUMBINS);
-    ctp7RegionsNonZeroVsEvt_->Fill(nev_,nonzeroregions/PUMBINS);
+    rctRegionsNonZero_->Fill(nonzeroregions/PUMBINS);
+    rctRegionsNonZeroVsEvt_->Fill(nev_,nonzeroregions/PUMBINS);
     //second region loop necessary because pum found in prior loop  
     for (L1CaloRegionCollection::const_iterator ireg = rgn->begin();
          ireg != rgn->end(); ireg++) {
       if (ireg->gctEta()==0){
-          ctp7RegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
-          ctp7RegionsPumEta0_->Fill(nonzeroregions/PUMBINS,ireg->et());}
+          rctRegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
+          rctRegionsPumEta0_->Fill(nonzeroregions/PUMBINS,ireg->et());}
       else if (ireg->gctEta()==1) {
-          ctp7RegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
-          ctp7RegionsPumEta1_->Fill(nonzeroregions/PUMBINS,ireg->et());}
+          rctRegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
+          rctRegionsPumEta1_->Fill(nonzeroregions/PUMBINS,ireg->et());}
       else if (ireg->gctEta()==2){ 
-          ctp7RegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
-          ctp7RegionsPumEta2_->Fill(nonzeroregions/PUMBINS,ireg->et());}
+          rctRegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
+          rctRegionsPumEta2_->Fill(nonzeroregions/PUMBINS,ireg->et());}
       else if (ireg->gctEta()==3){ 
-          ctp7RegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
-          ctp7RegionsPumEta3_->Fill(nonzeroregions/PUMBINS,ireg->et());}
+          rctRegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
+          rctRegionsPumEta3_->Fill(nonzeroregions/PUMBINS,ireg->et());}
       else if (ireg->gctEta()==4){ 
-          ctp7RegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
-          ctp7RegionsPumEta4_->Fill(nonzeroregions/PUMBINS,ireg->et());}
+          rctRegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
+          rctRegionsPumEta4_->Fill(nonzeroregions/PUMBINS,ireg->et());}
       else if (ireg->gctEta()==5){ 
-          ctp7RegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
-          ctp7RegionsPumEta5_->Fill(nonzeroregions/PUMBINS,ireg->et());}
+          rctRegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
+          rctRegionsPumEta5_->Fill(nonzeroregions/PUMBINS,ireg->et());}
       else if (ireg->gctEta()==6){ 
-          ctp7RegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
-          ctp7RegionsPumEta6_->Fill(nonzeroregions/PUMBINS,ireg->et());}
+          rctRegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
+          rctRegionsPumEta6_->Fill(nonzeroregions/PUMBINS,ireg->et());}
       else if (ireg->gctEta()==7){ 
-          ctp7RegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
-          ctp7RegionsPumEta7_->Fill(nonzeroregions/PUMBINS,ireg->et());}
+          rctRegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
+          rctRegionsPumEta7_->Fill(nonzeroregions/PUMBINS,ireg->et());}
       else if (ireg->gctEta()==8){ 
-          ctp7RegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
-          ctp7RegionsPumEta8_->Fill(nonzeroregions/PUMBINS,ireg->et());}
+          rctRegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
+          rctRegionsPumEta8_->Fill(nonzeroregions/PUMBINS,ireg->et());}
       else if (ireg->gctEta()==9){ 
-          ctp7RegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
-          ctp7RegionsPumEta9_->Fill(nonzeroregions/PUMBINS,ireg->et());}
+          rctRegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
+          rctRegionsPumEta9_->Fill(nonzeroregions/PUMBINS,ireg->et());}
       else if (ireg->gctEta()==10){ 
-          ctp7RegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
-          ctp7RegionsPumEta10_->Fill(nonzeroregions/PUMBINS,ireg->et());}
+          rctRegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
+          rctRegionsPumEta10_->Fill(nonzeroregions/PUMBINS,ireg->et());}
       else if (ireg->gctEta()==11){ 
-          ctp7RegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
-          ctp7RegionsPumEta11_->Fill(nonzeroregions/PUMBINS,ireg->et());}
+          rctRegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
+          rctRegionsPumEta11_->Fill(nonzeroregions/PUMBINS,ireg->et());}
       else if (ireg->gctEta()==12){ 
-          ctp7RegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
-          ctp7RegionsPumEta12_->Fill(nonzeroregions/PUMBINS,ireg->et());}
+          rctRegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
+          rctRegionsPumEta12_->Fill(nonzeroregions/PUMBINS,ireg->et());}
       else if (ireg->gctEta()==13){ 
-          ctp7RegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
-          ctp7RegionsPumEta13_->Fill(nonzeroregions/PUMBINS,ireg->et());}
+          rctRegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
+          rctRegionsPumEta13_->Fill(nonzeroregions/PUMBINS,ireg->et());}
       else if (ireg->gctEta()==14){ 
-          ctp7RegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
-          ctp7RegionsPumEta14_->Fill(nonzeroregions/PUMBINS,ireg->et());}
+          rctRegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
+          rctRegionsPumEta14_->Fill(nonzeroregions/PUMBINS,ireg->et());}
       else if (ireg->gctEta()==15){ 
-          ctp7RegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
-          ctp7RegionsPumEta15_->Fill(nonzeroregions/PUMBINS,ireg->et());}
+          rctRegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
+          rctRegionsPumEta15_->Fill(nonzeroregions/PUMBINS,ireg->et());}
       else if (ireg->gctEta()==16){ 
-          ctp7RegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
-          ctp7RegionsPumEta16_->Fill(nonzeroregions/PUMBINS,ireg->et());}
+          rctRegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
+          rctRegionsPumEta16_->Fill(nonzeroregions/PUMBINS,ireg->et());}
       else if (ireg->gctEta()==17){ 
-          ctp7RegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
-          ctp7RegionsPumEta17_->Fill(nonzeroregions/PUMBINS,ireg->et());}
+          rctRegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
+          rctRegionsPumEta17_->Fill(nonzeroregions/PUMBINS,ireg->et());}
       else if (ireg->gctEta()==18){ 
-          ctp7RegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
-          ctp7RegionsPumEta18_->Fill(nonzeroregions/PUMBINS,ireg->et());}
+          rctRegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
+          rctRegionsPumEta18_->Fill(nonzeroregions/PUMBINS,ireg->et());}
       else if (ireg->gctEta()==19){ 
-          ctp7RegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
-          ctp7RegionsPumEta19_->Fill(nonzeroregions/PUMBINS,ireg->et());}
+          rctRegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
+          rctRegionsPumEta19_->Fill(nonzeroregions/PUMBINS,ireg->et());}
       else if (ireg->gctEta()==20){ 
-          ctp7RegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
-          ctp7RegionsPumEta20_->Fill(nonzeroregions/PUMBINS,ireg->et());}
+          rctRegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
+          rctRegionsPumEta20_->Fill(nonzeroregions/PUMBINS,ireg->et());}
       else if (ireg->gctEta()==21){
-          ctp7RegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
-          ctp7RegionsPumEta21_->Fill(nonzeroregions/PUMBINS,ireg->et());}
+          rctRegionsAvgEtVsEta_->Fill(ireg->gctEta(),ireg->et());
+          rctRegionsPumEta21_->Fill(nonzeroregions/PUMBINS,ireg->et());}
     }
 
   }//end doHd
 
   
-  e.getByToken(ctp7Source_L1CEMCollection_,em);
+  e.getByToken(rctSource_L1CEMCollection_,em);
   
   if (!em.isValid()) {
     edm::LogInfo("DataNotFound") << "can't find L1CaloEmCollection";
@@ -478,32 +478,32 @@ void L1TRCTOffline::analyze(const Event & e, const EventSetup & c)
   for (L1CaloEmCollection::const_iterator iem = em->begin();
        iem != em->end(); iem++) {
     
- //   ctp7EmCardRegion_->Fill((iem->ctp7Region()==0?1:-1)*(iem->ctp7Card()));
+ //   rctEmCardRegion_->Fill((iem->rctRegion()==0?1:-1)*(iem->rctCard()));
 
     if (iem->isolated()) {
       if(iem->rank()>0)
       {
-      ctp7IsoEmRank_->Fill(iem->rank());
-      ctp7IsoEmEtEtaPhi_->Fill(iem->regionId().ieta(),
+      rctIsoEmRank_->Fill(iem->rank());
+      rctIsoEmEtEtaPhi_->Fill(iem->regionId().ieta(),
 			      iem->regionId().iphi(), iem->rank());
       if(iem->rank()>10){
-	ctp7IsoEmOccEtaPhi_->Fill(iem->regionId().ieta(),
+	rctIsoEmOccEtaPhi_->Fill(iem->regionId().ieta(),
 				 iem->regionId().iphi());
       }
-      ctp7EmBx_->Fill(iem->bx());
+      rctEmBx_->Fill(iem->bx());
       }
     }
     else {
       if(iem->rank()>0)
       { 
-      ctp7NonIsoEmRank_->Fill(iem->rank());
-      ctp7NonIsoEmEtEtaPhi_->Fill(iem->regionId().ieta(),
+      rctNonIsoEmRank_->Fill(iem->rank());
+      rctNonIsoEmEtEtaPhi_->Fill(iem->regionId().ieta(),
 				 iem->regionId().iphi(), iem->rank());
       if(iem->rank()>10){
-	ctp7NonIsoEmOccEtaPhi_->Fill(iem->regionId().ieta(),
+	rctNonIsoEmOccEtaPhi_->Fill(iem->regionId().ieta(),
 				    iem->regionId().iphi());
       }
-      ctp7EmBx_->Fill(iem->bx());
+      rctEmBx_->Fill(iem->bx());
       }
     }
 

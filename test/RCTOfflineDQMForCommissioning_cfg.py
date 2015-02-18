@@ -26,18 +26,18 @@ process.MessageLogger = cms.Service("MessageLogger",
 
 process.dqmSaver.workflow = cms.untracked.string('/L1TMonitor/Calo/RCTOffline')
 
-process.l1tctp7 = cms.EDAnalyzer("L1TRCTOffline",
+process.l1trct = cms.EDAnalyzer("L1TRCTOffline",
     DQMStore = cms.untracked.bool(True),
     disableROOToutput = cms.untracked.bool(False),
     outputFile = cms.untracked.string('./RCTOfflineDQMMC.root'),
-    ctp7Source = cms.InputTag("simRctDigis"),
-#    ctp7Source = cms.InputTag("caloStage1Digis"),
+    rctSource = cms.InputTag("simRctDigis"),
+#    rctSource = cms.InputTag("caloStage1Digis"),
     verbose = cms.untracked.bool(False),
     filterTriggerType  = cms.int32(-1)
 )
 
 #This creates DQM-compatible plots
-process.p = cms.Path(process.l1tctp7+process.dqmSaver)
+process.p = cms.Path(process.l1trct+process.dqmSaver)
 
 
 
