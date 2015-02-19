@@ -348,9 +348,9 @@ void L1TRCTOffline::analyze(const Event & e, const EventSetup & c)
 
   if ( doHd ) {
     // Fill the RCT histograms
-    int nonzeroregions = 0;
-    int totalregionet = 0;
-    int maxregionet = 0;
+    unsigned int nonzeroregions = 0;
+    unsigned int totalregionet = 0;
+    unsigned int maxregionet = 0;
 
     // Regions
     for (L1CaloRegionCollection::const_iterator ireg = rgn->begin();
