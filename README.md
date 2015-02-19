@@ -12,7 +12,7 @@ A example of a <a href="https://cmsweb.cern.ch/dqm/online/start?runnr=193556;dat
 a) Install
 ----------
 ```bash 
-scram pro -n dqmTests CMSSW CMSSW_7_3_0_pre2
+scram pro -n dqmTests CMSSW CMSSW_7_4_0_pre5
 git cms-init
 git clone --recursive https://github.com/mcepeda/TestDQM.git  RCTOfflineTests/RCTOfflineDQM/
 export USER_CXXFLAGS="-Wno-error=unused-but-set-variable -Wno-error=unused-variable -Wno-error=sign-compare"
