@@ -15,7 +15,7 @@ a) Install
 scram pro -n dqmTests CMSSW CMSSW_7_4_0_pre5
 git cms-init
 git clone --recursive https://github.com/mcepeda/TestDQM.git  RCTOfflineTests/RCTOfflineDQM/
-export USER_CXXFLAGS="-Wno-error=unused-but-set-variable -Wno-error=unused-variable -Wno-error=sign-compare"
+export USER_CXXFLAGS="-Wno-error=unused-but-set-variable -Wno-error=unused-variable"
 scram b
 cd RCTOfflineTests/RCTOfflineDQM/test
 ```
