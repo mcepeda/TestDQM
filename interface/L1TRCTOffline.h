@@ -128,6 +128,8 @@ private:
   MonitorElement* rctIsoEmRank_;
   MonitorElement* rctNonIsoEmRank_;
   MonitorElement* rctRegionsMaxEtVsEvt_;
+  MonitorElement* rctIsoEmMaxEtVsEvt_;
+  MonitorElement* rctNonIsoEmMaxEtVsEvt_;
 
   int nev_; // Number of events processed
   std::string outputFile_; //file name for ROOT ouput

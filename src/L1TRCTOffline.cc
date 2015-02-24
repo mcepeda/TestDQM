@@ -119,6 +119,14 @@ void L1TRCTOffline::beginRun(edm::Run const& iRun, edm::EventSetup const& iSetup
         dbe->book2D("RctRegionsMaxEtVsEvt", " MAX REGION RANK vs EVT", EVBINS, EVMIN,
                     EVMAX, R10BINS, R10MIN, R10MAX);
 
+    rctIsoEmMaxEtVsEvt_ =
+        dbe->book2D("RctIsoEmMaxEtVsEvt", " MAX IsoEm RANK vs EVT", EVBINS, EVMIN,
+                    EVMAX, R10BINS, R10MIN, R10MAX);
+
+    rctNonIsoEmMaxEtVsEvt_ = 
+        dbe->book2D("RctNonIsoEmMaxEtVsEvt", " MAX NonIsoEm RANK vs EVT", EVBINS, EVMIN,
+                    EVMAX, R10BINS, R10MIN, R10MAX);
+
     rctRegionsAverageRegionEt_ =
 	dbe->book1D("RctRegionsAverageRegionEt", "AVERAGE REGION RANK", R10BINS, R10MIN, R10MAX);
 
@@ -352,6 +360,7 @@ void L1TRCTOffline::analyze(const Event & e, const EventSetup & c)
     unsigned int totalregionet = 0;
     unsigned int maxregionet = 0;
 
+
     // Regions
     for (L1CaloRegionCollection::const_iterator ireg = rgn->begin();
 	 ireg != rgn->end(); ireg++) {
@@ -475,12 +484,19 @@ void L1TRCTOffline::analyze(const Event & e, const EventSetup & c)
   }
   if ( ! doEm ) return;
   // Isolated and non-isolated EM
+  //
+    unsigned int maxnonisoemet = 0;
+    unsigned int maxisoemet = 0;
+  
   for (L1CaloEmCollection::const_iterator iem = em->begin();
        iem != em->end(); iem++) {
-    
+      
  //   rctEmCardRegion_->Fill((iem->rctRegion()==0?1:-1)*(iem->rctCard()));
 
     if (iem->isolated()) {
+
+      if(iem->rank()>maxisoemet) maxisoemet=iem->rank();
+
       if(iem->rank()>0)
       {
       rctIsoEmRank_->Fill(iem->rank());
@@ -494,6 +510,9 @@ void L1TRCTOffline::analyze(const Event & e, const EventSetup & c)
       }
     }
     else {
+
+      if(iem->rank()>maxnonisoemet) maxnonisoemet=iem->rank();
+
       if(iem->rank()>0)
       { 
       rctNonIsoEmRank_->Fill(iem->rank());
@@ -508,5 +527,9 @@ void L1TRCTOffline::analyze(const Event & e, const EventSetup & c)
     }
 
   }
+
+    rctIsoEmMaxEtVsEvt_->Fill(nev_,maxisoemet);
+    rctNonIsoEmMaxEtVsEvt_->Fill(nev_,maxnonisoemet);
+
 
 }
