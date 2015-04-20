@@ -150,6 +150,7 @@ private:
   MonitorElement* l1GctCenJetsEtEtaPhi_; 
   MonitorElement* l1GctForJetsEtEtaPhi_;
   MonitorElement* l1GctTauJetsEtEtaPhi_;
+  MonitorElement* l1GctIsoTauJetsEtEtaPhi_;
   MonitorElement* l1GctIsoEmRankEtaPhi_;
   MonitorElement* l1GctNonIsoEmRankEtaPhi_;
 
@@ -157,12 +158,14 @@ private:
   MonitorElement* l1GctCenJetsOccEtaPhi_;
   MonitorElement* l1GctForJetsOccEtaPhi_;  
   MonitorElement* l1GctTauJetsOccEtaPhi_;  
+  MonitorElement* l1GctIsoTauJetsOccEtaPhi_;
   MonitorElement* l1GctIsoEmOccEtaPhi_;    
   MonitorElement* l1GctNonIsoEmOccEtaPhi_; 
 
   MonitorElement* l1GctCenJetsRank_;
   MonitorElement* l1GctForJetsRank_;
   MonitorElement* l1GctTauJetsRank_;
+  MonitorElement* l1GctIsoTauJetsRank_;
   MonitorElement* l1GctIsoEmRank_;
   MonitorElement* l1GctNonIsoEmRank_;
 
@@ -217,6 +220,7 @@ private:
   edm::InputTag gctCenJetsSource_;
   edm::InputTag gctForJetsSource_;
   edm::InputTag gctTauJetsSource_;
+  edm::InputTag gctIsoTauJetsSource_;
   edm::InputTag gctEnergySumsSource_;
   edm::InputTag gctIsoEmSource_;
   edm::InputTag gctNonIsoEmSource_;
@@ -230,6 +234,7 @@ private:
   edm::EDGetTokenT<L1GctJetCandCollection> gctCenJetsSourceToken_;
   edm::EDGetTokenT<L1GctJetCandCollection> gctForJetsSourceToken_;
   edm::EDGetTokenT<L1GctJetCandCollection> gctTauJetsSourceToken_;
+  edm::EDGetTokenT<L1GctJetCandCollection> gctIsoTauJetsSourceToken_;
   edm::EDGetTokenT<L1GctHFRingEtSumsCollection> gctEnergySumsSourceToken_;
   edm::EDGetTokenT<L1GctHFBitCountsCollection> l1HFCountsToken_;
   edm::EDGetTokenT<L1GctEtMissCollection> l1EtMissToken_;

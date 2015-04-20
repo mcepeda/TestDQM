@@ -62,6 +62,7 @@ L1TGCT::L1TGCT(const edm::ParameterSet & ps) :
   gctCenJetsSource_(ps.getParameter<edm::InputTag>("gctCentralJetsSource")),
   gctForJetsSource_(ps.getParameter<edm::InputTag>("gctForwardJetsSource")),
   gctTauJetsSource_(ps.getParameter<edm::InputTag>("gctTauJetsSource")),
+  gctIsoTauJetsSource_(ps.getParameter<edm::InputTag>("gctIsoTauJetsSource")),
   gctEnergySumsSource_(ps.getParameter<edm::InputTag>("gctEnergySumsSource")),
   gctIsoEmSource_(ps.getParameter<edm::InputTag>("gctIsoEmSource")),
   gctNonIsoEmSource_(ps.getParameter<edm::InputTag>("gctNonIsoEmSource")),
@@ -91,6 +92,7 @@ L1TGCT::L1TGCT(const edm::ParameterSet & ps) :
   gctCenJetsSourceToken_ = consumes<L1GctJetCandCollection>(ps.getParameter<edm::InputTag>("gctCentralJetsSource"));
   gctForJetsSourceToken_ = consumes<L1GctJetCandCollection>(ps.getParameter<edm::InputTag>("gctForwardJetsSource"));
   gctTauJetsSourceToken_ = consumes<L1GctJetCandCollection>(ps.getParameter<edm::InputTag>("gctTauJetsSource"));
+  gctIsoTauJetsSourceToken_ = consumes<L1GctJetCandCollection>(ps.getParameter<edm::InputTag>("gctIsoTauJetsSource"));
   gctEnergySumsSourceToken_ = consumes<L1GctHFRingEtSumsCollection>(ps.getParameter<edm::InputTag>("gctEnergySumsSource"));
   l1HFCountsToken_ = consumes<L1GctHFBitCountsCollection>(ps.getParameter<edm::InputTag>("gctEnergySumsSource"));
   l1EtMissToken_ = consumes<L1GctEtMissCollection>(ps.getParameter<edm::InputTag>("gctEnergySumsSource"));
@@ -121,15 +123,20 @@ void L1TGCT::bookHistograms(DQMStore::IBooker &ibooker, edm::Run const&, edm::Ev
   l1GctCenJetsEtEtaPhi_ = ibooker.book2D("CenJetsEtEtaPhi", "CENTRAL JET E_{T}",JETETABINS, JETETAMIN, JETETAMAX, PHIBINS, PHIMIN, PHIMAX); 
   l1GctForJetsEtEtaPhi_ = ibooker.book2D("ForJetsEtEtaPhi", "FORWARD JET E_{T}", JETETABINS, JETETAMIN, JETETAMAX, PHIBINS, PHIMIN, PHIMAX); 
   l1GctTauJetsEtEtaPhi_ = ibooker.book2D("TauJetsEtEtaPhi", "TAU JET E_{T}", EMETABINS, EMETAMIN, EMETAMAX,	PHIBINS, PHIMIN, PHIMAX); 
+  l1GctIsoTauJetsEtEtaPhi_ = ibooker.book2D("IsoTauJetsEtEtaPhi", "IsoTau JET E_{T}", EMETABINS, EMETAMIN, EMETAMAX, PHIBINS, PHIMIN, PHIMAX);
+
   l1GctIsoEmRankEtaPhi_ = ibooker.book2D("IsoEmRankEtaPhi", "ISO EM E_{T}", EMETABINS, EMETAMIN, EMETAMAX, PHIBINS, PHIMIN, PHIMAX); 		    
   l1GctNonIsoEmRankEtaPhi_ = ibooker.book2D("NonIsoEmRankEtaPhi", "NON-ISO EM E_{T}", EMETABINS, EMETAMIN, EMETAMAX,PHIBINS, PHIMIN, PHIMAX); 
   l1GctAllJetsOccEtaPhi_ = ibooker.book2D("AllJetsOccEtaPhi", "CENTRAL AND FORWARD JET OCCUPANCY", JETETABINS, JETETAMIN, JETETAMAX, PHIBINS, PHIMIN, PHIMAX);
   l1GctCenJetsOccEtaPhi_ = ibooker.book2D("CenJetsOccEtaPhi", "CENTRAL JET OCCUPANCY", JETETABINS, JETETAMIN, JETETAMAX, PHIBINS, PHIMIN, PHIMAX); 
   l1GctForJetsOccEtaPhi_ = ibooker.book2D("ForJetsOccEtaPhi", "FORWARD JET OCCUPANCY",JETETABINS, JETETAMIN, JETETAMAX, PHIBINS, PHIMIN, PHIMAX);
   l1GctTauJetsOccEtaPhi_ = ibooker.book2D("TauJetsOccEtaPhi", "TAU JET OCCUPANCY", EMETABINS, EMETAMIN, EMETAMAX, PHIBINS, PHIMIN, PHIMAX); 
+  l1GctIsoTauJetsOccEtaPhi_ = ibooker.book2D("IsoTauJetsOccEtaPhi", "IsoTau JET OCCUPANCY", EMETABINS, EMETAMIN, EMETAMAX, PHIBINS, PHIMIN, PHIMAX);
+
   l1GctIsoEmOccEtaPhi_ = ibooker.book2D("IsoEmOccEtaPhi", "ISO EM OCCUPANCY", EMETABINS, EMETAMIN, EMETAMAX, PHIBINS, PHIMIN, PHIMAX); 
   l1GctNonIsoEmOccEtaPhi_ = ibooker.book2D("NonIsoEmOccEtaPhi", "NON-ISO EM OCCUPANCY", EMETABINS, EMETAMIN, EMETAMAX, PHIBINS, PHIMIN, PHIMAX); 
-  
+ 
+ 
   l1GctHFRing1PosEtaNegEta_ = ibooker.book2D("HFRing1Corr", "HF RING1 E_{T} CORRELATION +/-  #eta",  R3BINS, R3MIN, R3MAX, R3BINS, R3MIN, R3MAX); 
   l1GctHFRing2PosEtaNegEta_ = ibooker.book2D("HFRing2Corr", "HF RING2 E_{T} CORRELATION +/-  #eta", R3BINS, R3MIN, R3MAX, R3BINS, R3MIN, R3MAX);
   l1GctHFRing1TowerCountPosEtaNegEta_ = ibooker.book2D("HFRing1TowerCountCorr", "HF RING1 TOWER COUNT CORRELATION +/-  #eta", R3BINS, R3MIN, R3MAX, R3BINS, R3MIN, R3MAX);
@@ -155,6 +162,7 @@ void L1TGCT::bookHistograms(DQMStore::IBooker &ibooker, edm::Run const&, edm::Ev
   l1GctCenJetsRank_  = ibooker.book1D("CenJetsRank", "CENTRAL JET E_{T}", R6BINS, R6MIN, R6MAX);
   l1GctForJetsRank_  = ibooker.book1D("ForJetsRank", "FORWARD JET E_{T}", R6BINS, R6MIN, R6MAX);
   l1GctTauJetsRank_  = ibooker.book1D("TauJetsRank", "TAU JET E_{T}", R6BINS, R6MIN, R6MAX);
+  l1GctIsoTauJetsRank_  = ibooker.book1D("IsoTauJetsRank", "IsoTau JET E_{T}", R6BINS, R6MIN, R6MAX);
   l1GctIsoEmRank_    = ibooker.book1D("IsoEmRank", "ISO EM E_{T}", R6BINS, R6MIN, R6MAX);
   l1GctNonIsoEmRank_ = ibooker.book1D("NonIsoEmRank", "NON-ISO EM E_{T}", R6BINS, R6MIN, R6MAX);
 
@@ -241,6 +249,7 @@ void L1TGCT::analyze(const edm::Event & e, const edm::EventSetup & c)
   edm::Handle < L1GctJetCandCollection > l1CenJets;
   edm::Handle < L1GctJetCandCollection > l1ForJets;
   edm::Handle < L1GctJetCandCollection > l1TauJets;
+  edm::Handle < L1GctJetCandCollection > l1IsoTauJets;
   edm::Handle < L1GctHFRingEtSumsCollection > l1HFSums; 
   edm::Handle < L1GctHFBitCountsCollection > l1HFCounts;
   edm::Handle < L1GctEtMissCollection >  l1EtMiss;
@@ -253,6 +262,7 @@ void L1TGCT::analyze(const edm::Event & e, const edm::EventSetup & c)
   e.getByToken(gctCenJetsSourceToken_, l1CenJets);
   e.getByToken(gctForJetsSourceToken_, l1ForJets);
   e.getByToken(gctTauJetsSourceToken_, l1TauJets);
+  e.getByToken(gctIsoTauJetsSourceToken_, l1IsoTauJets);
   e.getByToken(gctEnergySumsSourceToken_, l1HFSums);
   e.getByToken(l1HFCountsToken_, l1HFCounts);
   e.getByToken(l1EtMissToken_, l1EtMiss);
@@ -319,6 +329,25 @@ void L1TGCT::analyze(const edm::Event & e, const edm::EventSetup & c)
   } else {    
     edm::LogWarning("DataNotFound") << " Could not find l1TauJets label was " << gctTauJetsSource_ ;
   }
+
+  // isoTau jets
+  if (l1IsoTauJets.isValid()) {
+    for (L1GctJetCandCollection::const_iterator tj = l1IsoTauJets->begin(); tj != l1IsoTauJets->end(); tj++) {
+      // only plot central BX
+      if (tj->bx()==0) {
+        l1GctIsoTauJetsRank_->Fill(tj->rank());
+        // only plot eta and phi maps for non-zero candidates
+        if (tj->rank()) {
+          l1GctIsoTauJetsEtEtaPhi_->Fill(tj->regionId().ieta(),tj->regionId().iphi(),tj->rank());
+          l1GctIsoTauJetsOccEtaPhi_->Fill(tj->regionId().ieta(),tj->regionId().iphi());
+        }
+      }
+      if (tj->rank()) l1GctAllJetsOccRankBx_->Fill(tj->bx(),tj->rank()); // for all BX
+    }
+  } else {    
+    edm::LogWarning("DataNotFound") << " Could not find l1IsoTauJets label was " << gctIsoTauJetsSource_ ;
+  }
+
 
   // Missing ET
   if (l1EtMiss.isValid()) { 

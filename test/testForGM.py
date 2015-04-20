@@ -1,11 +1,6 @@
 import FWCore.ParameterSet.Config as cms
 
-process = cms.Process('L1TEMULATION2')
-
-process.load("DQMServices.Core.DQM_cfg")
-process.load("DQMServices.Components.DQMEnvironment_cfi")
-
-
+process = cms.Process('L1TEMULATION')
 
 process.load('Configuration.StandardSequences.Services_cff')
 process.load('FWCore.MessageService.MessageLogger_cfi')
@@ -17,14 +12,15 @@ process.load('Configuration.Geometry.GeometryIdeal_cff')
 process.load('FWCore.MessageService.MessageLogger_cfi')
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(-1)
+    input = cms.untracked.int32(100)
     )
 
 # Input source
 process.source = cms.Source("PoolSource",
+    secondaryFileNames = cms.untracked.vstring(),
                             fileNames = cms.untracked.vstring(
-"file:Digis.root"
-)
+                              "file:/data/L1Ts1calo/rctReferences/rct64GGH2TauEventsFilter.root"
+                            )
 )
 
 process.options = cms.untracked.PSet()
@@ -34,8 +30,45 @@ from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag.connect = cms.string('frontier://FrontierProd/CMS_COND_31X_GLOBALTAG')
 process.GlobalTag.globaltag = cms.string('POSTLS161_V12::All')
 
+# raw data from MP card
+process.load('EventFilter.L1TRawToDigi.stage1MP7BufferRaw_cfi')
+# pack into arrays
+latencies = [ 40, 0 ]
+offsets   = [ 0,  54 ]
+
+process.stage1Raw.nFramesPerEvent    = cms.untracked.int32(6)
+process.stage1Raw.nFramesOffset    = cms.untracked.vuint32(offsets)
+process.stage1Raw.nFramesLatency   = cms.untracked.vuint32(latencies)
+
+process.stage1Raw.rxFile = cms.untracked.string("/data/L1Ts1calo/ModifiedMP7Dumps/data_20150303_RCTInput_64H2TausEvents_fw2271/rx_summary_final.txt")
+process.stage1Raw.txFile = cms.untracked.string("/data/L1Ts1calo/ModifiedMP7Dumps/data_20150303_RCTInput_64H2TausEvents_fw2271/tx_summary_final.txt")
+
+# raw to digi
+# I think this will unpack both the rct digis and the Layer 2 digis
+process.load('EventFilter.L1TRawToDigi.caloStage1Digis_cfi')
+process.caloStage1Digis.InputLabel = cms.InputTag('stage1Raw')
+
+
+
+process.load('L1Trigger.L1TCalorimeter.L1TCaloStage1_PPFromRaw_cff')
+process.simCaloStage1Digis.FirmwareVersion = cms.uint32(3)
+process.simRctUpgradeFormatDigis.emTag = cms.InputTag("simRctDigis")
+process.simRctUpgradeFormatDigis.regionTag = cms.InputTag("simRctDigis")
+
+process.emulationChainFromSkim = cms.Path(
+    process.simRctUpgradeFormatDigis +
+    process.simCaloStage1Digis +
+    process.simCaloStage1FinalDigis+
+    process.simCaloStage1LegacyFormatDigis
+)
+
+process.unpackerFromRaw = cms.Path(
+    process.stage1Raw +
+    process.caloStage1Digis
+)
+
 process.TFileService = cms.Service("TFileService",
-                                   fileName = cms.string("L1UpgradeAnalyzer.root")
+                                   fileName = cms.string("L1UnpackedPureEmulator.root")
 )
 
 process.EmulatorResults = cms.EDAnalyzer('l1t::L1UpgradeAnalyzer',
@@ -44,7 +77,7 @@ process.EmulatorResults = cms.EDAnalyzer('l1t::L1UpgradeAnalyzer',
                                          InputLayer2IsoTauCollection = cms.InputTag("simCaloStage1FinalDigis:isoTaus"),
                                          InputLayer2CaloSpareCollection = cms.InputTag("simCaloStage1FinalDigis:HFRingSums"),
                                          InputLayer1Collection = cms.InputTag("simRctUpgradeFormatDigis"),
-                                         legacyRCTDigis = cms.InputTag("caloStage1Digis")
+                                         legacyRCTDigis = cms.InputTag("simRctDigis")
 )
 
 process.UnpackerResults = cms.EDAnalyzer('l1t::L1UpgradeAnalyzer',
@@ -52,42 +85,14 @@ process.UnpackerResults = cms.EDAnalyzer('l1t::L1UpgradeAnalyzer',
                                          InputLayer2TauCollection = cms.InputTag("caloStage1Digis:rlxTaus"),
                                          InputLayer2IsoTauCollection = cms.InputTag("caloStage1Digis:isoTaus"),
                                          InputLayer2CaloSpareCollection = cms.InputTag("caloStage1Digis:HFRingSums"),
-                                         InputLayer1Collection = cms.InputTag("simRctUpgradeFormatDigis"),
+                                         InputLayer1Collection = cms.InputTag("None"),
                                          legacyRCTDigis = cms.InputTag("caloStage1Digis")
 )
 
 
 process.p2 = cms.Path(process.EmulatorResults + process.UnpackerResults)
 
-process.dqmSaver.workflow = cms.untracked.string('/L1TMonitor/Calo/RCTOffline')
-
-process.l1trct = cms.EDAnalyzer("L1TRCTOffline",
-    DQMStore = cms.untracked.bool(True),
-    disableROOToutput = cms.untracked.bool(False),
-    outputFile = cms.untracked.string('./RCTOfflineDQMMCEMU.root'),
-    rctSource = cms.InputTag("simRctDigis"),
-    verbose = cms.untracked.bool(False),
-    filterTriggerType  = cms.int32(-1)
-)
-
-process.l1tGct = cms.EDAnalyzer("L1TGCT",
-      gctCentralJetsSource = cms.InputTag("simCaloStage1LegacyFormatDigis","cenJets"),
-      gctForwardJetsSource = cms.InputTag("simCaloStage1LegacyFormatDigis","forJets"),
-      gctTauJetsSource = cms.InputTag("simCaloStage1LegacyFormatDigis","tauJets"),
-      gctIsoTauJetsSource = cms.InputTag("simCaloStage1LegacyFormatDigis","isoTauJets"),
-      gctEnergySumsSource = cms.InputTag("simCaloStage1LegacyFormatDigis"),
-      gctIsoEmSource = cms.InputTag("simCaloStage1LegacyFormatDigis","isoEm"),
-      gctNonIsoEmSource = cms.InputTag("simCaloStage1LegacyFormatDigis","nonIsoEm"),
-      verbose = cms.untracked.bool(False),
-      DQMStore = cms.untracked.bool(True),
-      disableROOToutput = cms.untracked.bool(False),
-    outputFile = cms.untracked.string('./RCTOfflineDQMMCEMU.root'),
-      filterTriggerType = cms.int32(-1)
-)
-
-#This creates DQM-compatible plots
-process.p3 = cms.Path(process.l1trct+process.l1tGct+process.dqmSaver)
 
 process.schedule = cms.Schedule(
-    process.p3, process.p2
+    process.emulationChainFromSkim,process.unpackerFromRaw ,process.p2 
     )
